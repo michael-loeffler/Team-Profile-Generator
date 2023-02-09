@@ -91,46 +91,114 @@ function init() {
 
 function getManagerInfo(questions) {
     inquirer
-    .prompt(questions)
-    .then((data) => {
-        const manager = new Manager(data.name, data.id, data.email, data.office);
-        team.push(manager);
-        getNextEmployee(employeeType, engineerQuestions, internQuestions);
-    })
+        .prompt(questions)
+        .then((data) => {
+            const manager = new Manager(data.name, data.id, data.email, data.office);
+            team.push(manager);
+            getNextEmployee(employeeType, engineerQuestions, internQuestions);
+        })
 }
 
 function getNextEmployee(employeeType, engineerQuestions, internQuestions) {
     inquirer
-    .prompt(employeeType)
-    .then((data) => {
-        if (data.employee === 'Engineer') {
-            getEngineerInfo(engineerQuestions);
-        } else if (data.employee === 'Intern') {
-            getInternInfo(internQuestions);
-        } else {
-            
-        }
-        return data.employee;
-    })
+        .prompt(employeeType)
+        .then((data) => {
+            if (data.employee === 'Engineer') {
+                getEngineerInfo(engineerQuestions);
+            } else if (data.employee === 'Intern') {
+                getInternInfo(internQuestions);
+            } else {
+
+            }
+            return data.employee;
+        })
 }
 
 function getEngineerInfo(questions) {
     inquirer
-    .prompt(questions)
-    .then((data) => {
-        const engineer = new Engineer(data.name, data.id, data.email, data.github);
-        team.push(engineer);
-        console.log(team);
-    })
+        .prompt(questions)
+        .then((data) => {
+            const engineer = new Engineer(data.name, data.id, data.email, data.github);
+            team.push(engineer);
+            console.log(generateHTML());
+        })
 }
 
 function getInternInfo(questions) {
     inquirer
-    .prompt(questions)
-    .then((data) => {
-        const intern = new Intern(data.name, data.id, data.email, data.school);
-        team.push(intern);
-    })
+        .prompt(questions)
+        .then((data) => {
+            const intern = new Intern(data.name, data.id, data.email, data.school);
+            team.push(intern);
+        })
+}
+
+function generateHTML() {
+
+    for (let i = 0; i < team.length; i++) {
+        var icon;
+        var trait;
+        switch (team[i].getRole()) {
+            case 'Manager':
+                icon = `<i class="fa-solid fa-mug-hot"></i>`;
+                trait = `Office Number: ${team[i].getOfficeNumber()}`;
+                break;
+            case 'Engineer':
+                icon = `<i class="fa-solid fa-screwdriver-wrench"></i>`;
+                trait = `GitHub: ${team[i].getGithub()}`;
+                break;
+            case 'Intern':
+                icon = `<i class="fa-sharp fa-solid fa-id-card"></i>`;
+                trait = `School: ${team[i].getSchool()}`;
+                break;
+            default:
+                break;
+        }
+
+        var main = $('.row');
+    
+
+        //- Creates new HTML elements -//
+        var cardEl = $('<div>');
+        cardEl.attr("class", "card");
+        cardEl.attr("style", "width: 18rem;");
+
+        var cardHeaderEl = $('<div>');
+        cardHeaderEl.attr("class", "card-header bg-primary text-white");
+
+        var nameEl = $('<h3>');
+        var iconTitleEl = $('<h4>');
+
+        var listEl = $('<ul>');
+        listEl.attr("class", "list-group list-group-flush")
+        var idEl = $('<li>');
+        idEl.attr("class", "list-group-item")
+        var emailEl = $('<li>');
+        emailEl.attr("class", "list-group-item")
+        var traitEl = $('<li>');
+        traitEl.attr("class", "list-group-item")
+
+        //- Appends all new HTML elements to each other creating a "card" -//
+        cardHeaderEl.append(nameEl);
+        cardHeaderEl.append(iconTitleEl);
+
+        listEl.append(idEl);
+        listEl.append(emailEl);
+        listEl.append(traitEl);
+
+        cardEl.append(cardHeaderEl);
+        cardEl.append(listEl);
+
+        main.append(cardEl);
+
+        //- Writes data into associated elements -//
+        nameEl.text(`${team[i].getName()}`);
+        iconTitleEl.text(`${icon} ${team[i].getRole()}`);
+        idEl.text(`ID: ${team[i].getId()}`);
+        emailEl.innerHTML = `Email: <a href="mailto:${team[i].getEmail()}">${team[i].getEmail()}</a>`;
+        traitEl.text(`${trait}`);
+
+   }
 }
 
 init();
