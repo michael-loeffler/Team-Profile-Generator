@@ -1,9 +1,11 @@
 const inquirer = require("inquirer");
-// const src = require("./src");
+// const src = require("./src/src.html");
 const fs = require("fs");
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+
+const team = [];
 
 const managerQuestions = [
     {
@@ -41,22 +43,22 @@ const engineerQuestions = [
     {
         type: 'input',
         message: `What is the engineer's name?`,
-        name: 'engineerName',
+        name: 'name',
     },
     {
         type: 'input',
         message: `What is the engineer's employee ID?`,
-        name: 'engineerID',
+        name: 'id',
     },
     {
         type: 'input',
         message: `What is the engineer's email address?`,
-        name: 'engineerEmail',
+        name: 'email',
     },
     {
         type: 'input',
         message: `What is the engineer's GitHub username?`,
-        name: 'engineerGithub',
+        name: 'github',
     },
 ];
 
@@ -64,28 +66,27 @@ const internQuestions = [
     {
         type: 'input',
         message: `What is the intern's name?`,
-        name: 'internName',
+        name: 'name',
     },
     {
         type: 'input',
         message: `What is the intern's employee ID?`,
-        name: 'internID',
+        name: 'id',
     },
     {
         type: 'input',
         message: `What is the intern's email address?`,
-        name: 'internEmail',
+        name: 'email',
     },
     {
         type: 'input',
         message: `What school does the intern attend?`,
-        name: 'internSchool',
+        name: 'school',
     },
 ];
 
-async function init() {
-    let manager = await getManagerInfo(managerQuestions);
-    let employee = await getNextEmployee(employeeType);
+function init() {
+    let manager = getManagerInfo(managerQuestions);
 }
 
 function getManagerInfo(questions) {
@@ -93,7 +94,8 @@ function getManagerInfo(questions) {
     .prompt(questions)
     .then((data) => {
         const manager = new Manager(data.name, data.id, data.email, data.office);
-        return manager;
+        team.push(manager);
+        getNextEmployee(employeeType, engineerQuestions, internQuestions);
     })
 }
 
@@ -102,12 +104,13 @@ function getNextEmployee(employeeType, engineerQuestions, internQuestions) {
     .prompt(employeeType)
     .then((data) => {
         if (data.employee === 'Engineer') {
-            return getEngineerInfo(engineerQuestions);
+            getEngineerInfo(engineerQuestions);
         } else if (data.employee === 'Intern') {
-            return getInternInfo(internQuestions);
+            getInternInfo(internQuestions);
         } else {
-            return;
+            
         }
+        return data.employee;
     })
 }
 
@@ -116,7 +119,8 @@ function getEngineerInfo(questions) {
     .prompt(questions)
     .then((data) => {
         const engineer = new Engineer(data.name, data.id, data.email, data.github);
-        return engineer;
+        team.push(engineer);
+        console.log(team);
     })
 }
 
@@ -125,7 +129,7 @@ function getInternInfo(questions) {
     .prompt(questions)
     .then((data) => {
         const intern = new Intern(data.name, data.id, data.email, data.school);
-        return intern;
+        team.push(intern);
     })
 }
 

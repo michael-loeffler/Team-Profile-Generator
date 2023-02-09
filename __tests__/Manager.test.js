@@ -60,4 +60,18 @@ describe("Manager", () => {
             expect(result).toEqual(email);
         });
     });
+    describe("getOfficeNumber", () => {
+        it("should return office number from Manager object", () => {
+            // Arrange
+            const name = 'Michael';
+            const id = 23;
+            const email = 'email@test.com';
+            const officeNumber = 9;
+            // Act
+            const obj = new Manager(name, id, email, officeNumber);    
+            const result = obj.getOfficeNumber();
+            // Assert 
+            expect(result).toEqual(officeNumber);
+        });
+    });
 });
