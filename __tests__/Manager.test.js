@@ -2,7 +2,6 @@ const Manager = require('../lib/Manager');
 
 describe("Manager", () => {
     describe('Initialization', () => {
-        // Positive test
         it("should create an object with 'name', 'id', 'email' and 'officeNumber' properties set to the 'name', 'id', 'email' and 'officeNumber' arguments provided when called with the 'new' keyword", () => {
         // Arrange
         const name = 'Michael';

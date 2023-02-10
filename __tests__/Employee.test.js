@@ -2,7 +2,6 @@ const Employee = require('../lib/Employee');
 
 describe("Employee", () => {
     describe('Initialization', () => {
-        // Positive test
         it("should create an object with 'name', 'id', and 'email' properties set to the 'name', 'id', and 'email' arguments provided when called with the 'new' keyword", () => {
         // Arrange
         const name = 'Michael';

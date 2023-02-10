@@ -2,7 +2,6 @@ const Engineer = require('../lib/Engineer');
 
 describe("Engineer", () => {
     describe('Initialization', () => {
-        // Positive test
         it("should create an object with 'name', 'id', 'email' and 'github' properties set to the 'name', 'id', 'email' and 'github' arguments provided when called with the 'new' keyword", () => {
         // Arrange
         const name = 'Michael';

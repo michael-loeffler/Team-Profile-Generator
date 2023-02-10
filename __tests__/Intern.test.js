@@ -2,7 +2,6 @@ const Intern = require('../lib/Intern');
 
 describe("Intern", () => {
     describe('Initialization', () => {
-        // Positive test
         it("should create an object with 'name', 'id', 'email' and 'school' properties set to the 'name', 'id', 'email' and 'school' arguments provided when called with the 'new' keyword", () => {
         // Arrange
         const name = 'Michael';
