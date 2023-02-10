@@ -153,7 +153,7 @@ function generateHTML() {
                 break;
             case 'Engineer':
                 icon = `<i class="fa-solid fa-screwdriver-wrench"></i>`;
-                trait = `GitHub: ${team[i].getGithub()}`;
+                trait = `GitHub: <a href="https://github.com/${team[i].getGithub()}">${team[i].getGithub()}</a>`;
                 break;
             case 'Intern':
                 icon = `<i class="fa-sharp fa-solid fa-id-card"></i>`;
@@ -210,7 +210,7 @@ function generateHTML() {
 
     const fileName = "teamProfile.html";
     fs.writeFile(`./dist/${fileName}`, htmlBlock, (err) =>
-        err ? console.error(err) : console.log(`Success! Your ${fileName} file has been created and added to the dist folder!`))
+        err ? console.error(err) : console.log(`Success! Your ${fileName} file has been created and added to the dist directory!`))
 };
 
 //- Call of the init function at the outset to initialize app -//
